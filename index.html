@@ -1,0 +1,66 @@
+<script src='https://www.unpkg.com/chrono-node@1.4.4/dist/chrono.min.js'></script>
+<style>
+    body { padding: 90px; }
+    .table { display: grid; grid-template-columns: 130px 1fr; }
+    input { width: 100%; padding: 0 5px; line-height: 30px; border: 1px solid #eee; font-size: 20px; }
+    .table .label, .table .output { background: #efefef; margin: 1px; padding: 2px 5px; }
+</style>
+<script type="module">
+    import { h, Component, render, useState, useRef, useEffect, htm } from 'https://npm.reversehttp.com/preact,preact/hooks,htm';
+
+    // Initialize htm with Preact
+    const html = htm.bind(h);
+
+    function App (props) {
+        
+        let [input, setInput] = useState('');
+        let [timestampMS, setOutputTimestampMS] = useState('');
+        let [timestamp, setOutputTimestamp] = useState('');
+        let [datestring, setOutputString] = useState('');
+
+        let textbox = useRef(null);
+
+        useEffect(() => {
+            textbox.current.focus();
+        }, []);
+
+        let interpret = (text) => {
+            setInput(text)
+            //let separators = /(\son\s|\sof\s|\sin\s|,)/;
+            //let parts = text.split(separators);
+            //setOutput(parts.join(" / "));
+            let result;
+            if(text.match(/^\d+$/) && text.length > 10) {
+                result = new Date(parseInt(text));
+            } else if(text.match(/^\d+$/) && text.length >= 8) {
+                result = new Date(parseInt(text)*1000);
+            } else {
+                result = chrono.parseDate(text, new Date());
+            }
+            console.log(result)
+            if(result) {
+                setOutputString(result.toString());
+                setOutputTimestamp(parseInt(result.getTime() / 1000));
+                setOutputTimestampMS(result.getTime());
+            } else {
+                setOutputString();
+                setOutputTimestamp();
+                setOutputTimestampMS();
+            }
+        }
+        return html`
+            <h1>human timestamp</h1>
+            <input type='text' placeholder='Type or paste' ref=${textbox} onInput=${e => interpret(e.target.value)} value=${input} />
+            <div class='table'>
+                <div class='label'>toString</div>
+                <div class='output'>${datestring}</div>
+                <div class='label'>Timestamp</div>
+                <div class='output'>${timestamp}</div>
+                <div class='label'>Timestamp (ms)</div>
+                <div class='output'>${timestampMS}</div>
+            </div>
+        `;
+    }
+
+    render(html`<${App} name="World" />`, document.body);
+</script>
