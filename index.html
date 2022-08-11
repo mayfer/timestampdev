@@ -1,8 +1,10 @@
+<title>human timestamp</title>
 <script src='https://www.unpkg.com/chrono-node@1.4.4/dist/chrono.min.js'></script>
 <style>
-    body { padding: 90px; }
+    body { padding: 90px; font-family: monospace; background: #efefef; }
     .table { display: grid; grid-template-columns: 130px 1fr; }
-    input { width: 100%; padding: 0 5px; line-height: 30px; border: 1px solid #eee; font-size: 20px; }
+    input { width: 100%; padding: 0 5px; line-height: 30px; border: 2px solid rgb(124, 168, 203); font-size: 20px; outline: none; }
+    input:focus { width: 100%; padding: 0 5px; line-height: 30px; border: 2px solid rgb(65, 146, 150); font-size: 20px; }
     .table .label, .table .output { background: #efefef; margin: 1px; padding: 2px 5px; }
 
     .examples { margin-top: 30px; }
@@ -74,6 +76,8 @@
                     <li>july 1st 2021 4pm UTC</li>
                     <li>1660198483000</li>
                     <li>1660198483</li>
+                    <li>Thu Aug 11 2022 01:54:23 GMT-0700 (PDT)</li>
+                    <li>2020-08-11T22:54:23.000Z</li>
                 </ul>
             </div>
             <div class='footer'>
